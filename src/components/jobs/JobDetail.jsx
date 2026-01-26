@@ -11,6 +11,7 @@ const JobDetail = () => {
         async function fetchJobDetail() {
             try {
                 const data = await JoblyApi.getJob(jobId);
+                console.log(data);
                 setJobData(data);
             } catch (error) {
                 console.error("Error fetching job detail:", error);
@@ -27,12 +28,13 @@ const JobDetail = () => {
     }
 
     return (
+
         <div>
             <h2>Job Detail</h2>
             <p>Title: {jobData.title}</p>
             <p>Salary: {jobData.salary}</p>
             <p>Equity: {jobData.equity}</p>
-            <p>Company Handle: {jobData.company_handle}</p>
+            <p>Company Handle: {jobData.companyHandle}</p>
         </div>
     );
 };

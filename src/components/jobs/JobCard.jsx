@@ -5,11 +5,13 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 
 const JobsCard = ({ job }) => {
+    console.log("JobCard received job:", job);
     return (
+
         <div>
             <Card sx={{ minWidth: 275, marginBottom: 2 }}>
                 <CardContent>
-                    <Typography variant="h5" component={Link} to={`/companies/${job.title}`} sx={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Typography variant="h5" component={Link} to={`/jobs/${job.id}`} sx={{ textDecoration: 'none', color: 'inherit' }}>
                         Company: {job.companyName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">

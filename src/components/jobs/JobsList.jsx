@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import JoblyApi from "../../api/api.js";
 import JobsCard from "./JobCard.jsx";
+import Search from "../search-bar/Search.jsx";
 
 /**
  * The JobsList component
@@ -15,6 +16,16 @@ import JobsCard from "./JobCard.jsx";
 const JobsList = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [jobs, setJobs] = useState([]);
+
+
+    const onSearch = async (searchTerm) => {
+        try {
+            const jobs = await JoblyApi.getJobs(searchTerm); // Pass searchTerm directly
+            setJobs(jobs);
+        } catch (error) {
+            console.error("Error fetching jobs:", error);
+        }
+    };
 
     useEffect(() => {
         async function fetchJobs() {
@@ -38,7 +49,7 @@ const JobsList = () => {
     return (
         <div>
             <h2>Jobs List</h2>
-
+            <Search onSearch={onSearch} />
             {jobs.map(job => (
                 <JobsCard key={job.id} job={job} />
             ))}
