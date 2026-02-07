@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import JoblyApi from "../../api/api"; // Import API class
 
 
 /** 
@@ -22,9 +23,16 @@ const SignUpForm = () => {
     });
 
     const onSignUp = async (data) => {
-        // Placeholder for actual sign-up logic
-        console.log("Signing up with data:", data);
-        return true; // Simulate successful sign-up
+        try {
+            const token = await JoblyApi.signup(data); // Call backend API
+            localStorage.setItem("token", token); // Store token in localStorage
+            console.log("Sign-up successful, token stored in localStorage");
+            return true; // Indicate successful sign-up
+        } catch (err) {
+            console.error("Sign-up failed:", err);
+            alert("Sign-up failed: " + err[0]); // Display error message
+            return false; // Indicate failed sign-up
+        }
     };
 
     const handleChange = (evt) => {

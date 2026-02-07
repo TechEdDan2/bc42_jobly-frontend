@@ -14,15 +14,22 @@ const NavBar = ({ isLoggedIn, handleLogout }) => {
                     Jobly
                 </Typography>
 
-                <button><NavLink to="/companies" style={{ textDecoration: 'none', color: 'inherit' }}>Companies</NavLink></button>
 
-                <button><NavLink to="/jobs" style={{ textDecoration: 'none', color: 'inherit' }}>Jobs</NavLink></button>
 
                 {isLoggedIn ? (
                     <>
+                        <Button color="inherit" component={NavLink} to="/companies">
+                            Companies
+                        </Button>
+
+                        <Button color="inherit" component={NavLink} to="/jobs">
+                            Jobs
+                        </Button>
+
                         <Button color="inherit" component={NavLink} to="/profile">
                             Profile
                         </Button>
+
                         <Button color="inherit" onClick={handleLogout}>
                             Logout
                         </Button>

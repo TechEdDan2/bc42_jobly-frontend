@@ -28,7 +28,9 @@ const LoginForm = ({ onLogin }) => {
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         const success = await onLogin(formData);
+        console.log("Login success:", success);
         if (success) {
+            console.log("Navigating to home page...");
             navigate("/");
         }
     };
