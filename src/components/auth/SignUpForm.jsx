@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import JoblyApi from "../../api/api"; // Import API class
+import UserContext from "../../helpers/UserContext"; // Import UserContext
 
 
 /** 
@@ -13,6 +14,7 @@ import JoblyApi from "../../api/api"; // Import API class
  * Uses onSignUp prop to call parent function on successful sign up
  */
 const SignUpForm = () => {
+    const { onSignUp } = React.useContext(UserContext);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
@@ -21,19 +23,6 @@ const SignUpForm = () => {
         lastName: "",
         email: ""
     });
-
-    const onSignUp = async (data) => {
-        try {
-            const token = await JoblyApi.signup(data); // Call backend API
-            localStorage.setItem("token", token); // Store token in localStorage
-            console.log("Sign-up successful, token stored in localStorage");
-            return true; // Indicate successful sign-up
-        } catch (err) {
-            console.error("Sign-up failed:", err);
-            alert("Sign-up failed: " + err[0]); // Display error message
-            return false; // Indicate failed sign-up
-        }
-    };
 
     const handleChange = (evt) => {
         const { name, value } = evt.target;

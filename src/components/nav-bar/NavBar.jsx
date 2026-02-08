@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 const NavBar = ({ isLoggedIn, handleLogout }) => {
@@ -30,7 +30,7 @@ const NavBar = ({ isLoggedIn, handleLogout }) => {
                             Profile
                         </Button>
 
-                        <Button color="inherit" onClick={handleLogout}>
+                        <Button color="inherit" onClick={handleLogout} component={Link} to="/login">
                             Logout
                         </Button>
                     </>

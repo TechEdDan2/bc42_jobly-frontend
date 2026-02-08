@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import UserContext from "../../helpers/UserContext";
 
 /** 
  * Login form component
  * Allows user to log in to their account
  * Uses onLogin prop to call parent function on successful login
  */
-const LoginForm = ({ onLogin }) => {
+const LoginForm = () => {
+    const { onLogin } = useContext(UserContext);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",

@@ -15,7 +15,7 @@ class JoblyApi {
     static token;
 
     static async request(endpoint, data = {}, method = "get") {
-        console.debug("API Call:", endpoint, data, method);
+        //console.debug("API Call:", endpoint, data, method);
 
         //there are multiple ways to pass an authorization token, this is how you pass it in the header.
         //this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
@@ -31,6 +31,20 @@ class JoblyApi {
             console.error("API Error:", err.response);
             let message = err.response.data.error.message;
             throw Array.isArray(message) ? message : [message];
+        }
+    }
+
+    /** Set the token for API requests. */
+    static setToken(token) {
+        this.token = token;
+        localStorage.setItem("token", token); // Persist token in localStorage
+    }
+
+    /** Retrieve the token from localStorage on app load. */
+    static loadTokenFromStorage() {
+        const token = localStorage.getItem("token");
+        if (token) {
+            this.token = token;
         }
     }
 
@@ -73,19 +87,41 @@ class JoblyApi {
     /** Signup a new user. */
     static async signup(data) {
         let res = await this.request(`auth/register`, data, "post");
+        this.setToken(res.token); // Store token in localStorage and class variable
         return res.token;
     }
 
     /** Login a user. */
     static async login(data) {
         let res = await this.request(`auth/token`, data, "post");
+        this.setToken(res.token); // Store token in localStorage and class variable
         return res.token;
     }
 
-    /** Get user details. */
-    static async getUser(username) {
-        let res = await this.request(`users/${username}`);
+    /** Get details of the current user. */
+    static async getCurrentUser(token, username) {
+        if (!token) {
+            throw new Error("No token found. Please log in.");
+        }
+
+        if (!username) {
+            throw new Error("No username provided. Unable to fetch user details.");
+        }
+
+        const headers = { Authorization: `Bearer ${token}` }; // Use token from arguments
+        let res = await this.request(`users/${username}`, {}, "get", headers);
         return res.user;
+    }
+
+    /** Helper to extract username from token. */
+    static getUsernameFromToken(token) {
+        try {
+            const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+            return payload.username;
+        } catch (err) {
+            console.error("Error decoding token:", err);
+            return null;
+        }
     }
 
     /** Update user profile. */
@@ -97,8 +133,8 @@ class JoblyApi {
 }
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-    "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-    "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+// JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
+//     "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
+//     "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
 export default JoblyApi;
