@@ -13,6 +13,7 @@ import Profile from './components/profile.jsx'
 import JoblyApi from './api/api.js'
 import useLocal from "./hooks/useLocal";
 import UserContext from "./helpers/UserContext.js";
+import ProfileForm from './components/user/ProfileForm.jsx';
 
 function App() {
   const [user, setUser] = useLocal("user", null); // Persist user in local memory
@@ -69,6 +70,7 @@ function App() {
             <Route path="/jobs" element={<JobsList />} />
             <Route path="/jobs/:jobId" element={<JobDetail />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/edit" element={<ProfileForm />} />
             <Route path="*" element={<p>Hmmm. I can't seem to find what you want.</p>} />
           </Routes>
         </main>

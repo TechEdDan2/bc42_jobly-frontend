@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import JoblyApi from "../api/api.js";
 import UserContext from "../helpers/UserContext.js";
 
@@ -7,8 +7,14 @@ const Profile = () => {
     const { user } = React.useContext(UserContext);
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
+    // Debugging: Log user context to verify it contains expected data REMOVE BEFORE PRODUCTION
     console.debug("Profile component rendered", { user });
+
+    const handleEditProfile = () => {
+        navigate("/profile/edit");
+    };
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -49,6 +55,18 @@ const Profile = () => {
             ) : (
                 <p>User data not available.</p>
             )}
+
+            {/* Version 1 */}
+            {/* <NavLink to="/profile/edit">
+                <button color="primary">
+                    Edit Profile
+                </button>
+            </NavLink> */}
+
+            {/* Version 2 */}
+            <button color="primary" onClick={handleEditProfile}>
+                Edit Profile
+            </button>
 
         </div>
     );

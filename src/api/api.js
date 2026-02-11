@@ -126,8 +126,20 @@ class JoblyApi {
 
     /** Update user profile. */
     static async updateUser(username, data) {
-        let res = await this.request(`users/${username}`, data, "patch");
-        return res.user;
+        if (!this.token) {
+            throw new Error("No token found. Please log in.");
+        }
+
+        const headers = { Authorization: `Bearer ${this.token}` }; // Use token from JoblyApi
+
+        try {
+            let res = await this.request(`users/${username}`, data, "patch", headers);
+            return res.user;
+        } catch (err) {
+            console.error("Error updating user:", err.response);
+            let message = err.response?.data?.error?.message || "Unknown error occurred.";
+            throw Array.isArray(message) ? message : [message];
+        }
     }
 
 }
