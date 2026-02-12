@@ -9,8 +9,14 @@ import Search from "../search-bar/Search.jsx";
  * Each job is rendered using the JobsCard component
  *
  * Route: /jobs
+ * State:
+ * - isLoading: boolean to track loading state
+ * - jobs: array of job objects fetched from the API
  *
- *  
+ * Effects:
+ * - On mount, fetches the list of jobs from the API and updates state
+ * 
+ * @returns - JSX element representing the list of job postings with a search bar to filter results
  */
 
 const JobsList = () => {

@@ -142,6 +142,39 @@ class JoblyApi {
         }
     }
 
+    /** Apply to a job. */
+    static async applyToJob(username, jobId, token) {
+        if (!token) {
+            throw new Error("No token found. Please log in.");
+        }
+
+        const headers = { Authorization: `Bearer ${token}` };
+        const sanitizedJobId = Number(jobId); // Ensure jobId is a number
+        const url = `${username}/jobs/${sanitizedJobId}`;
+
+        try {
+            console.debug("Making POST request to:", {
+                url: `${BASE_URL}/${url}`,
+                headers,
+                body: {},
+            });
+
+            const res = await this.request(url, {}, "post", headers);
+
+            console.debug("Response from backend:", res);
+            return res.applied; // Return the applied job ID
+        } catch (err) {
+            console.error("API Error:", {
+                url: `${BASE_URL}/${url}`,
+                headers,
+                error: err.response || err,
+            });
+
+            let message = err.response?.data?.error?.message || "Unknown error occurred.";
+            throw Array.isArray(message) ? message : [message];
+        }
+    }
+
 }
 
 // for now, put token ("testuser" / "password" on class)

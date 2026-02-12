@@ -27,6 +27,7 @@ The frontend is built using React and Vite, providing a fast and responsive user
 - Implement additional features such as user profiles and saved jobs
 - Improve accessibility features for better usability
 - Add more robust error handling and user feedback mechanisms
+- Debug and optimize API interactions for better performance
 
 ## Built With
 - React
@@ -36,7 +37,14 @@ The frontend is built using React and Vite, providing a fast and responsive user
 - Material-UI for UI components
 
 ## Getting Started
-
+To get a local copy of the project up and running, follow these steps:
+### Setup Instructions
+1. Clone the repository:
+2. Install dependencies:
+3. Start the development server:
+4. Open your browser and navigate to `http://localhost:5173` to view the application.
+5. Ensure the backend API is running and accessible at the expected URL for the frontend to function correctly.
+6. Use the application to search for jobs, apply to jobs, and manage your profile.
 ## Author
 - Github - [TechEdDan2](https://github.com/TechEdDan2)
 - Frontend Mentor - [@TechEdDan2](https://www.frontendmentor.io/profile/TechEdDan2)
